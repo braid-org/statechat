@@ -1,0 +1,6 @@
+{
+    "dependencies": {
+        "express": "^4.17.3",
+        "statebus": "^6.1.22"
+    }
+}

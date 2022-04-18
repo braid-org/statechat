@@ -43,6 +43,15 @@ bus('what-now', {
     to_set: (val) => bus.state.yeep = val
 })
 
+
+// Here's a value that's always 2+ another number
+bus.state.counter = 0
+
+bus('two-plus', {
+    to_get: () => bus.state.counter + 2,
+    to_set: (val) => bus.state.counter = val - 2
+})
+
 // Serve other state from statebus
 app.use(bus.libs.http_in)
 

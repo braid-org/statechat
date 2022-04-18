@@ -14,7 +14,7 @@ app.get('/client.js',       send_file('client.js'))
 
 app.get('/statebus.js',     send_file('node_modules/statebus/statebus.js'))
 app.get('/statebus-lib.js', send_file('node_modules/statebus/clients.js'))
-app.get('/braidify.js',     send_file('node_modules/statebus/node_modules/braidify/braidify-client.js'))
+app.get('/braidify.js',     send_file('node_modules/braidify/braidify-client.js'))
 
 
 // Setup the statebus!

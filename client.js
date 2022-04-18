@@ -30,7 +30,7 @@ var Chat = bus.libs.react_class({
               <Input key="input"
                      style={{marginLeft: 10, width: 80}}
                      onChange={e => state['ls/me'] = e.target.value}
-                     value={state['ls/me']} />
+                     value={state['ls/me'] || ''} />
             </div>
             {(state['/messages'] || []).map((msg, i) => (
                 <div style={message_css} key={i}>

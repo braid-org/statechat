@@ -1,5 +1,6 @@
 {
     "dependencies": {
+        "braidify": "^0.1.23",
         "express": "^4.17.3",
         "statebus": "^7.0.3"
     }

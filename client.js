@@ -16,6 +16,7 @@ var Chat = bus.libs.react_class({
             if (!state['ls/me']) return false
 
             // Append a message to the end of the `messages` array
+            state['/messages'] = state['/messages'] || []
             state['/messages'].push({ from: state['ls/me'], body: textbox().value })
 
             // Clear the input

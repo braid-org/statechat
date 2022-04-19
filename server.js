@@ -29,12 +29,12 @@ bus.libs.file_store()       // Persist state onto disk
 //
 var timeout
 bus('time', {
-    to_get: (cb) => {
-        var f = () => cb.return(Date.now())
+    to_get: (t) => {
+        var f = () => t.done(Date.now())
         timeout = setInterval(f, 1000)
         f()
     },
-    to_forget: () => clearTimeout(timeout)
+    to_forget: () => clearTimeout(timeout)   // Unsubscribe
 })
     
 // Let's program some state!

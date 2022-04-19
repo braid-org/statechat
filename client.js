@@ -41,8 +41,13 @@ var Chat = bus.libs.react_class({
             ))}
 
            <span style={my_name_css}> {state['ls/me']}: </span>
-           <input id='textbox' onKeyUp={enter_send} style={{width:395}} disabled={!state['ls/me']} />
-           <button onClick={send} style={{width: 50}} disabled={!state['ls/me']}>Send</button>
+           <input id='textbox'
+                  onKeyUp={enter_send}
+                  style={{width:395}}
+                  disabled={!state['ls/me']} />
+           <button onClick={send} style={{width: 50}} disabled={!state['ls/me']}>
+             Send
+           </button>
         </div>
         )
     }

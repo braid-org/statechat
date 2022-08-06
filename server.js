@@ -1,4 +1,20 @@
-var bus = require('statebus')()
+var bus = require('statebus')({
+    client: (client) => {
+        client.honk = 1
+        console.log('client loaded!')
+
+        client('secret', {
+            get: () => {
+                if (client.state.current_user.logged_in)
+                    return 'yes'
+                else
+                    return 'no'
+            }
+        })
+
+        client.shadows(bus)
+    }
+})
 var app = require('express')()
 
 // Create the HTTP server
@@ -9,12 +25,15 @@ require('http')
 
 // Serve files from disk
 var send_file = (f) => (r, res) => res.sendFile(__dirname + '/' + f)
-app.get('/',                send_file('client.html'))
-app.get('/client.js',       send_file('client.js'))
+app.get('/',             send_file('client.html'))
+app.get('/coff',         send_file('client-coffee.html'))
+app.get('/client.js',    send_file('client.js'))
 
-app.get('/statebus.js',     send_file('node_modules/statebus/statebus.js'))
-app.get('/statebus-lib.js', send_file('node_modules/statebus/clients.js'))
-app.get('/braidify.js',     send_file('node_modules/braidify/braidify-client.js'))
+// Serve libraries
+app.get('/statebus.js',  send_file('node_modules/statebus/statebus.js'))
+app.get('/statebus-client-library.js',
+                         send_file('node_modules/statebus/client-library.js'))
+app.get('/braidify.js',  send_file('node_modules/braidify/braidify-client.js'))
 
 
 // Setup the statebus!
@@ -29,18 +48,18 @@ bus.libs.file_store()       // Persist state onto disk
 //
 var timeout
 bus('time', {
-    to_get: (t) => {
+    get: (t) => {
         var f = () => t.done(Date.now())
         timeout = setInterval(f, 1000)
         f()
     },
-    to_forget: () => clearTimeout(timeout)   // Unsubscribe
+    forget: () => clearTimeout(timeout)   // Unsubscribe
 })
     
 // Let's program some state!
 bus('what-now', {
-    to_get: () => bus.state.time,
-    to_set: (val) => bus.state.yeep = val
+    get: () => bus.state.time,
+    set: (val) => bus.state.yeep = val
 })
 
 
@@ -48,8 +67,8 @@ bus('what-now', {
 bus.state.counter = 0
 
 bus('two-plus', {
-    to_get: () => bus.state.counter + 2,
-    to_set: (val) => bus.state.counter = val - 2
+    get: () => bus.state.counter + 2,
+    set: (val) => bus.state.counter = val - 2
 })
 
 // Serve other state from statebus

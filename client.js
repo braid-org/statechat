@@ -1,16 +1,15 @@
 // Setup the bus
+// bus.libs.http_out('invisible/*', 'http://invisible.college:3007/')
 bus.libs.http_out('/*', '/')
 bus.libs.localstorage('ls/*')
 var state = bus.state
 
 // Helpers
-var Input = bus.libs.input
 var textbox = () => document.getElementById('textbox')
-
 
 // ***** React Components *****
 
-var Chat = bus.libs.react_class({
+var Chat = bus.libs.react17.react_class({
     render: () => {
         var send = () => {
             if (!state['ls/me']) return false
@@ -28,7 +27,7 @@ var Chat = bus.libs.react_class({
           <div style={chat_css}>
             <div style={{textAlign: 'right'}}>
               We shall call you:
-              <Input key="input"
+              <input key="input"
                      style={{marginLeft: 10, width: 80}}
                      onChange={e => state['ls/me'] = e.target.value}
                      value={state['ls/me'] || ''} />
@@ -94,4 +93,3 @@ if (React.version.split('.')[0] <= '17')
 
 // React v18
 else ReactDOM.createRoot(document.getElementById('root')).render(<Chat/>)
-

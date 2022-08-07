@@ -2,7 +2,9 @@
 // bus.libs.http_out('invisible/*', 'http://invisible.college:3007/')
 bus.libs.http_out('/*', '/')
 bus.libs.localstorage('ls/*')
-var state = bus.state
+var state = bus.state,
+    Input    = bus.libs.react17.input,
+    Textarea = bus.libs.react17.textarea
 
 // Helpers
 var textbox = () => document.getElementById('textbox')
@@ -27,7 +29,7 @@ var Chat = bus.libs.react17.react_class({
           <div style={chat_css}>
             <div style={{textAlign: 'right'}}>
               We shall call you:
-              <input key="input"
+              <Input key="input"
                      style={{marginLeft: 10, width: 80}}
                      onChange={e => state['ls/me'] = e.target.value}
                      value={state['ls/me'] || ''} />
@@ -40,7 +42,7 @@ var Chat = bus.libs.react17.react_class({
             ))}
 
            <span style={my_name_css}> {state['ls/me']}: </span>
-           <input id='textbox'
+           <Input id='textbox'
                   onKeyUp={enter_send}
                   style={{width:395}}
                   disabled={!state['ls/me']} />
